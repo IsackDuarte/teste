@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Sessão Especial 🎬</title>
+    <style>
+        /* Ajuste para que o HTML e BODY ocupem 100% da altura da viewport */
+        html, body {
+            height: 100%; /* Isso faz com que ocupem toda a altura da tela */
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffd6d6, #ffe9ec);
+            color: #333;
+            text-align: center;
+            /* Removi o padding do body para que o background cubra tudo */
+            /* O padding será aplicado dentro do .container */
+            box-sizing: border-box;
+            overflow: hidden; /* Esconde a barra de rolagem e permite a chuva */
+            position: relative; /* Importante para o posicionamento dos corações */
+            display: flex; /* Para centralizar o container */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+        }
+
+        .container {
+            max-width: 360px;
+            /* Removi o margin: 0 auto; pois display: flex no body já centraliza */
+            position: relative;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.7); /* Fundo suave para o conteúdo */
+            border-radius: 14px;
+            padding: 20px; /* Adicionado padding aqui em vez de no body */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para destacar o container */
+            /* Adicionei para o container não exceder a altura da tela em dispositivos pequenos */
+            max-height: 90vh;
+            overflow-y: auto; /* Adiciona scroll se o conteúdo for muito longo */
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 0.6em;
+        }
+
+        p {
+            font-size: 1.05em;
+            margin-bottom: 1.5em;
+            line-height: 1.5;
+        }
+
+        img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5em;
+        }
+
+        .rave-button {
+            background: #ff6f91;
+            border: none;
+            padding: 14px 24px;
+            font-size: 1em;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .rave-button:hover {
+            background: #ff4e71;
+        }
+
+        /* --- Estilos para a Chuva de Corações --- */
+        .heart-rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Agora 100% da altura do body, que é 100% da viewport */
+            pointer-events: none; /* Isso permite que você clique nos elementos por baixo dos corações */
+            overflow: hidden; /* Garante que os corações não apareçam fora do container */
+            z-index: 1; /* Para que os corações fiquem abaixo do conteúdo principal */
+        }
+
+        .heart {
+            position: absolute;
+            top: -50px; /* Começa acima da tela */
+            color: #e53935; /* Cor vermelha para o coração */
+            animation: fall linear infinite; /* Animação de queda */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+            opacity: 0.8;
+            font-size: 24px; /* Tamanho base, será ajustado pelo JS */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(105vh); /* Cai até sair da tela */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heart-rain-container">
+        </div>
+
+    <div class="container">
+        <h1>Sessão especial de Dia dos Namorados 🎬</h1>
+
+        <p>hoje a gente tá longe, mas eu não queria deixar esse dia passar em branco...<br>
+            então pensei numa coisa: que tal uma sessão de cinema, só a gente dois?<br>
+            cada um em casa, mas juntos na tela 💻🍿</p>
+
+        <img src="foto.jpg" alt="Imagem especial">
+
+        <p>se topar, me chama no zap 👇</p>
+
+        <a href="https://wa.me/5561999197600?text=oiii,%20claro%20que%20eu%20topo%20gatinho" class="rave-button"
+            target="_blank" rel="noopener noreferrer">
+            me chama no zap gatinha 💬
+        </a>
+    </div>
+
+    <script>
+        // Código JavaScript para a chuva de corações
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.heart-rain-container');
+            const numberOfHeartsAtOnce = 20; // Quantidade de corações visíveis simultaneamente
+            let heartsCount = 0;
+
+            function createHeart() {
+                // Se já temos muitos corações na tela, esperamos um pouco
+                if (heartsCount >= numberOfHeartsAtOnce) {
+                    return;
+                }
+
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = '❤️'; // Emoji de coração
+
+                // Posição horizontal aleatória (0 a 100vw)
+                heart.style.left = Math.random() * 100 + 'vw';
+
+                // Tamanho aleatório para variedade (entre 16px e 32px)
+                heart.style.fontSize = (16 + Math.random() * 16) + 'px';
+
+                // Duração da animação aleatória (entre 5 e 10 segundos)
+                heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+
+                // Atraso de animação para que os corações não caiam todos juntos
+                heart.style.animationDelay = `-${Math.random() * (5 + Math.random() * 5)}s`;
+
+                container.appendChild(heart);
+                heartsCount++;
+
+                // Remove o coração quando a animação termina para não sobrecarregar o DOM
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                    heartsCount--;
+                    // Cria um novo coração para substituir o que sumiu
+                    createHeart();
+                });
+            }
+
+            // Cria os primeiros corações para iniciar a chuva
+            for (let i = 0; i < numberOfHeartsAtOnce; i++) {
+                createHeart();
+            }
+        });
+    </script>
+</body>
+
+</html>
